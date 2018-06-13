@@ -26,7 +26,7 @@
   New-LocalUser "${custom_user2_username}" -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName "${custom_user2_username}" -Description "${custom_user2_username}"
 
   # Give Administrator rights to new custom user
-  Add-LocalGroupMember -Group "Administrators" -Member "${custom_user_username}"
+  Add-LocalGroupMember -Group "Administrators" -Member "${custom_user2_username}"
 
   # Add Blue Prism dir to the path variable permanently 
   #---------------------------------------------------- 
