@@ -1,10 +1,10 @@
 variable "region" {
   description = "The aws region in which you wish to create blueprism resources"
-  default     = "us-east-2"
+  default     = "us-east-1"
 }
 
 variable "subnet_id" {
-  description = "The aws subnet id of the subnet in which you want to create all blueprism resources"
+  description = "The aws subnet id of the subnet in which you want to create all blueprism ec2 resources"
 }
 
 variable "tags" {
@@ -82,6 +82,7 @@ variable "db_changes_apply_immediately" {
 
 variable "db_instance_class" {
   description = "RDS Database instance class to be used for blueprism database"
+
 }
 
 variable "db_subnet_group_name" {
@@ -103,11 +104,13 @@ variable "db_backup_retention_period" {
   default     = 0 }
 
 variable "db_backup_window" {
-  description = "Database backup window for RDS"
+  description = "Database backup window for RDS in UTC"
+  default     = "04:00-06:00"
 }
 
 variable "db_maintenance_window" {
-  description = "Database maintenance window for RDS"
+  description = "Database maintenance window for RDS in UTC"
+  default     = "Tue:06:30-Tue:07:00"
 }
 
 variable "db_sg_policy_name" {
@@ -118,6 +121,7 @@ variable "db_sg_policy_name" {
 variable "db_sg_ingress_cidr" { 
   type        = "list"
   description = "CIDR IP range from which blueprism database can be accessed directly"
+  default     = []
 }
 
 variable "appserver_hostname" {
@@ -131,19 +135,22 @@ variable "appserver_windows_administrator_password" {
 
 variable "appserver_windows_custom_user_username" {
   description = "Windows username for Custom user on appserver machine"
+  default     = ""
 }
 
 variable "appserver_windows_custom_user_password" {
   description = "Windows password for Custom user on appserver machine"
+  default     = ""
 }
 
 variable "appserver_instance_type" {
   description = "EC2 instance type for blueprism appserver"
+  default     = "t2.small"
 }
 
 variable "appserver_disable_api_termination" {
   description = "Boolean flag to disable api termination if set to true for blueprism appserver"
-  default     = false 
+  default     = false
 }
 
 variable "appserver_root_volume_size" {
@@ -154,8 +161,8 @@ variable "appserver_root_volume_size" {
 variable "appserver_private_ip" { 
   type        = "list"
   description = "List of Private IPs for the blueprism appserver. This module will automatically generate the count value based on the number of elements in the list"
-  default     = [ "" ]
 }
+
 variable "appserver_key_name" {
   description = "Name of the AWS Key Pair that should be used to decrypt the password for appserver"
   default     = ""
@@ -169,6 +176,7 @@ variable "appserver_port" {
 variable "appserver_sg_ingress_cidr" { 
   type        = "list"
   description = "CIDR IP range from which blueprism appserver can be accessed directly"
+  default     = [ "0.0.0.0/0" ]
 }
 
 variable "client_hostname" {
@@ -182,22 +190,27 @@ variable "client_windows_administrator_password" {
 
 variable "client_windows_custom_user_username" {
   description = "Windows username for Custom user on client machine"
+  default     = ""
 }
 
 variable "client_windows_custom_user_password" {
   description = "Windows password for Custom user on client machine"
+  default     = ""
 }
 
 variable "client_windows_custom_user2_username" {
   description = "Windows username for Custom2 user on client machine"
+  default     = ""
 }
 
 variable "client_windows_custom_user2_password" {
   description = "Windows password for Custom2 user on client machine"
+  default     = ""
 }
 
 variable "client_instance_type" {
   description = "EC2 instance type for blueprism client"
+  default     = "t2.small"
 }
 
 variable "client_disable_api_termination" {
@@ -213,7 +226,6 @@ variable "client_root_volume_size" {
 variable "client_private_ip" { 
   type        = "list"
   description = "List of Private IPs for the blueprism client. This module will automatically generate the count value based on the number of elements in the list"
-  default     = [ "" ]
 }
 
 variable "client_key_name" {
@@ -238,22 +250,27 @@ variable "resource_windows_administrator_password" {
 
 variable "resource_windows_custom_user_username" {
   description = "Windows username for Custom user on resource pc"
+  default     = ""
 }
 
 variable "resource_windows_custom_user_password" {
   description = "Windows password for Custom user on resource pc"
+  default     = ""
 }
 
 variable "resource_windows_custom_user2_username" {
   description = "Windows username for Custom2 user on resource pc"
+  default     = ""
 }
 
 variable "resource_windows_custom_user2_password" {
   description = "Windows password for Custom2 user on resource pc"
+  default     = ""
 }
 
 variable "resource_instance_type" {
   description = "EC2 instance type for blueprism resource"
+  default     = "t2.small"
 }
 
 variable "resource_disable_api_termination" {
@@ -269,7 +286,6 @@ variable "resource_root_volume_size" {
 variable "resource_private_ip" { 
   type        = "list" 
   description = "List of Private IPs for the blueprism resource. This module will automatically generate the count value based on the number of elements in the list"
-  default     = [ "" ]
 }
 
 variable "resource_key_name" {

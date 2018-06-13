@@ -46,14 +46,14 @@ resource "aws_security_group" "blueprism_db_sg_policy" {
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
-    protocol    = -1
-    from_port   = 0
-    to_port     = 0
+    protocol    = "tcp"
+    from_port   = 1433
+    to_port     = 1433
     cidr_blocks = [ 
-      "${var.db_sg_ingress_cidr}"
+      "${ length(var.db_sg_ingress_cidr) > 0 ? join( ",", var.db_sg_ingress_cidr) : data.aws_subnet.selected.cidr_block }"
     ]
   }
-
+  
   tags = "${merge(var.tags, map("Name", "${var.db_sg_policy_name}"))}"
 }
 
@@ -92,6 +92,7 @@ resource "aws_instance" "blueprism_appserver" {
   }
 
   depends_on = [ 
+    "aws_db_instance.blueprism_db",
     "aws_security_group.blueprism_appserver_sg"
   ]
 }
@@ -105,14 +106,14 @@ resource "aws_security_group" "blueprism_appserver_sg" {
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0
     to_port     = 0
     cidr_blocks = [ "${var.appserver_sg_ingress_cidr}" ]
   }
 
   egress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0 
     to_port     = 0 
     cidr_blocks = [ "0.0.0.0/0" ]
@@ -169,14 +170,14 @@ resource "aws_security_group" "blueprism_client_sg" {
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0
     to_port     = 0
     cidr_blocks = [ "${var.client_sg_ingress_cidr}" ]
   }
 
   egress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0 
     to_port     = 0 
     cidr_blocks = [ "0.0.0.0/0" ]
@@ -233,14 +234,14 @@ resource "aws_security_group" "blueprism_resource_sg" {
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0
     to_port     = 0
     cidr_blocks = [ "${var.resource_sg_ingress_cidr}" ]
   }
 
   egress {
-    protocol    = -1
+    protocol    = "-1"
     from_port   = 0 
     to_port     = 0 
     cidr_blocks = [ "0.0.0.0/0" ]
