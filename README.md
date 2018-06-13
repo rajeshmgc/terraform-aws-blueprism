@@ -10,10 +10,33 @@ A terraform module to setup Blue Prism Enterprise on AWS.
 - You have a private hosted zone (or custom internal DNS servers) configured for this VPC since blueprism communicates using the windows hostname.
 - You want to host Blueprism resources in a private subnet within the VPC. AWS Security group policy for now allows incoming communication from all ports and protocols to the appserver, interactive client and resource pcs for the cidr range provided as a variable.
 - You want the module to automatically update Blue Prism app/Login agent or license if you update their name or installer path by recreating required resources.
+- This module does not require or use Active Directory for setting up access/dns domain for the windows machines. You can configure it separately if required or use aws_route53_record to add dns hostnames for the blueprism ec2 resources to private hosted zone mapped to their private ip addresses for internal communication.
 
 ## Usage example
 
 ```
+variable "blueprism_appserver_private_ip" {
+  type = "list"
+  default = [ "10.0.1.10" ]
+}
+
+variable "blueprism_client_private_ip" { 
+  type = "list"
+  default = [ 
+    "10.0.1.15",
+    "10.0.1.16"
+  ]
+}
+
+variable "blueprism_resource_private_ip" { 
+  type = "list"
+  default = [ 
+    "10.0.1.20",
+    "10.0.1.21",
+    "10.0.1.22"
+  ]
+}
+
 module "blueprism" {
   source                = "capsulehealth/terraform-aws-blueprism"
   version               = "1.0.0"
@@ -37,7 +60,7 @@ module "blueprism" {
   # Below passwords can be passed as terraform environment variables
   appserver_windows_administrator_password = "${var.blueprism_appserver_windows_administrator_password}"
   appserver_instance_type                  = "m4.large"
-  appserver_private_ip                     = [ "10.0.1.10" ]
+  appserver_private_ip                     = "${var.blueprism_appserver_private_ip}"
   appserver_key_name                       = "blueprism-key"
 
   appserver_sg_ingress_cidr = [ 
@@ -48,7 +71,7 @@ module "blueprism" {
   client_windows_administrator_password  = "${var.blueprism_client_windows_administrator_password}"
   client_windows_custom_user_username    = "eng_team"
   client_windows_custom_user_password    = "${var.blueprism_client_windows_capsule_password}"
-  client_private_ip                      = [ "10.0.1.15", "10.0.1.16" ]
+  client_private_ip                      = "${var.blueprism_client_private_ip}"
   client_key_name                        = "blueprism-key"
 
   client_sg_ingress_cidr = [ 
@@ -60,7 +83,7 @@ module "blueprism" {
   resource_windows_custom_user_username    = "ops_team"
   resource_windows_custom_user_password    = "${var.blueprism_client_windows_capsule_password}"
   resource_instance_type                   = "t2.medium"
-  resource_private_ip                      = [ "10.0.1.20", "10.0.1.21", "10.0.1.22" ]
+  resource_private_ip                      = "${var.blueprism_resource_private_ip}"
   resource_key_name                        = "blueprism-key"
 
   resource_sg_ingress_cidr = [ 
@@ -71,6 +94,40 @@ module "blueprism" {
   tags {
     Environment = "operations"
   }
+}
+```
+
+Additionally, you can use Route53 to set dns host entry for the blueprism resources within the private hosted zone associated with this VPC. For example:
+
+```
+resource "aws_route53_record" "bp_appserver" {
+  count   = "${length(var.blueprism_appserver_private_ip)}"
+
+  zone_id = "Z1IXQ8ADKOSDL2"
+  name    = "${module.blueprism.appserver_hostname}-${count.index}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${element(var.blueprism_appserver_private_ip, count.index)}"]
+}
+
+resource "aws_route53_record" "bp_client" {
+  count   = "${length(var.blueprism_client_private_ip)}"
+
+  zone_id = "Z1IXQ8ADKOSDL2"
+  name    = "${module.blueprism.client_hostname}-${count.index}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${element(var.blueprism_client_private_ip, count.index)}"]
+}
+
+resource "aws_route53_record" "bp_resource" {
+  count   = "${length(var.blueprism_resource_private_ip)}"
+  
+  zone_id = "Z1IXQ8ADKOSDL2"
+  name    = "${module.blueprism.resource_hostname}-${count.index}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${element(var.blueprism_resource_private_ip, count.index)}"]
 }
 ```
 
