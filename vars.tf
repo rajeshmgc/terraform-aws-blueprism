@@ -30,6 +30,11 @@ variable "dns_suffix_domain_name" {
   default     = ""
 }
 
+variable "aws_windows_os" {
+  description = "The AWS version of Windows OS that should be installed on all blueprism ec2 resources"
+  default     = "Windows_Server-2016-English-Full-Base-*"
+}
+
 variable "bp_username" {
   description = "Username to login into blueprism application"
   default     = "admin"
