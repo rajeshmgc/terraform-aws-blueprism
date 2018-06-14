@@ -189,6 +189,13 @@ variable "appserver_sg_ingress_cidr" {
   default     = [ "0.0.0.0/0" ]
 }
 
+variable "appserver_custom_powershell_commands" {
+  type        = "list"
+  description = "List of custom powershell commands you would like to run while creating a Blue Prism Appserver machine. These will only be executed once when a new instance is created"
+  default     = []
+}
+
+
 variable "client_hostname" {
   description = "Windows hostname that should be assigned to the client machine"
   default     = "bp-client"
@@ -249,6 +256,12 @@ variable "client_sg_ingress_cidr" {
   default     = [ "0.0.0.0/0" ]
 }
 
+variable "client_custom_powershell_commands" {
+  type        = "list"
+  description = "List of custom powershell commands you would like to run while creating a Blue Prism Interative Client machine. These will only be executed once when a new instance is created"
+  default     = []
+}
+
 variable "resource_hostname" {
   description = "Windows hostname that should be assigned to the resource pc"
   default     = "bp-resource"
@@ -307,4 +320,10 @@ variable "resource_sg_ingress_cidr" {
   type        = "list"
   description = "CIDR IP range from which Blue Prism resource can be accessed directly"
   default     = [ "0.0.0.0/0" ]
+}
+
+variable "resource_custom_powershell_commands" {
+  type        = "list"
+  description = "List of custom powershell commands you would like to run while creating a Blue Prism Resource pc. These will only be executed once when a new instance is created"
+  default     = []
 }

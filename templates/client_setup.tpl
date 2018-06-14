@@ -52,6 +52,10 @@
   # Install Telnet for debugging just in case
   #------------------------------------------
   #dism /online /Enable-Feature /FeatureName:TelnetClient
+  
+  # Execute Custom powershell code provided by user
+  #------------------------------------------------
+  ${custom_powershell_commands}
 
   # Rename Windows Hostname based on the resource type
   #---------------------------------------------------

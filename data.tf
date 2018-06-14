@@ -40,6 +40,8 @@ data "template_file" "blueprism_appserver_setup" {
     create_new_db_for_first_use = "${var.create_new_db ? "AutomateC.exe /createdb ${var.db_master_password}" : "" }"
 
     appserver_port     = "${var.appserver_port}"
+
+    custom_powershell_commands = "${ length(var.appserver_custom_powershell_commands) > 0 ? join( "; ", var.appserver_custom_powershell_commands) : "" }"
   }
 }
 
@@ -64,6 +66,8 @@ data "template_file" "blueprism_client_setup" {
 
     appserver_hostname = "${element(var.appserver_private_ip, 0)}"
     appserver_port     = "${var.appserver_port}"
+
+    custom_powershell_commands = "${ length(var.client_custom_powershell_commands) > 0 ? join( "; ", var.client_custom_powershell_commands) : "" }"
   }
 }
 
@@ -90,5 +94,7 @@ data "template_file" "blueprism_resource_setup" {
 
     appserver_hostname = "${element(var.appserver_private_ip, 0)}"
     appserver_port     = "${var.appserver_port}"
+
+    custom_powershell_commands = "${ length(var.resource_custom_powershell_commands) > 0 ? join( "; ", var.resource_custom_powershell_commands) : "" }"
   }
 }
