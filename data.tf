@@ -82,8 +82,11 @@ data "template_file" "blueprism_resource_setup" {
     custom_user_username   = "${var.resource_windows_custom_user_username}"
     custom_user_password   = "${var.resource_windows_custom_user_password}"
     
-    blueprism_installer_path = "${var.blueprism_installer_path}"
-    login_agent_installer_path = "${var.login_agent_installer_path}"
+    blueprism_installer_path   = "${var.blueprism_installer_path}"
+    
+    install_login_agent = "${var.login_agent_installer_path ? "iwr -Uri "${var.login_agent_installer_path}" -OutFile login_agent.msi ; msiexec.exe /i login_agent.msi /qb- ALLUSERS=1 " : "" }"
+    
+    install_mapi        = "${var.mapi_installer_path ? "iwr -Uri "${var.mapi_installer_path}" -OutFile mapiex.msi; msiexec.exe /i mapiex.msi /qb- ALLUSERS=1" : "" }"
 
     appserver_hostname = "${element(var.appserver_private_ip, 0)}"
     appserver_port     = "${var.appserver_port}"

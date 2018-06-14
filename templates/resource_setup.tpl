@@ -44,13 +44,13 @@
 
   sleep 10
 
-  # Download Blue Prism Login Agent installer file 
-  #----------------------------------------------- 
-  iwr -Uri "${login_agent_installer_path}" -OutFile login_agent.msi 
+  # Install Blue Prism Login Agent if the installer path is provided 
+  #----------------------------------------------------------------- 
+  ${install_login_agent}
 
-  # Install Login Agent Executable 
-  #------------------------------- 
-  msiexec.exe /i login_agent.msi /qb- ALLUSERS=1 
+  # Install Blue Prism MAPI Ex if the installer path is provided 
+  #------------------------------------------------------------- 
+  ${install_mapi}
 
   # Create script to start Resource listener on Desktop
   #---------------------------------------------------- 

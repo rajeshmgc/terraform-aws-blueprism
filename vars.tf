@@ -21,8 +21,13 @@ variable "blueprism_license_path" {
 }
 
 variable "login_agent_installer_path" { 
-  description = "The complete url to download Blue Prism login agent installer file from" 
-  default     = "" 
+  description = "The complete url to download Blue Prism login agent installer file from and install on Resource PC" 
+  default     = ""
+}
+
+variable "mapi_installer_path" { 
+  description = "The complete url to download Blue Prism MAPI Ex installer file from and install on Resource PC" 
+  default     = ""
 }
 
 variable "dns_suffix_domain_name" {
