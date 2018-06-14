@@ -1,27 +1,27 @@
 variable "region" {
-  description = "The aws region in which you wish to create blueprism resources"
+  description = "The aws region in which you wish to create Blue Prism resources"
   default     = "us-east-1"
 }
 
 variable "subnet_id" {
-  description = "The aws subnet id of the subnet in which you want to create all blueprism ec2 resources"
+  description = "The aws subnet id of the subnet in which you want to create all Blue Prism ec2 resources"
 }
 
 variable "tags" {
-  description = "A map of tags to add to all blueprism resources"
+  description = "A map of tags to add to all Blue Prism resources"
   default     = {}
 }
 
 variable "blueprism_installer_path" { 
-  description = "The complete url to download blueprism installer file from"
+  description = "The complete url to download Blue Prism installer file from"
 }
 
 variable "blueprism_license_path" {
-  description = "The complete url to download blueprism license file from"
+  description = "The complete url to download Blue Prism license file from"
 }
 
 variable "login_agent_installer_path" { 
-  description = "The complete url to download blueprism login agent installer file from" 
+  description = "The complete url to download Blue Prism login agent installer file from" 
   default     = "" 
 }
 
@@ -31,26 +31,26 @@ variable "dns_suffix_domain_name" {
 }
 
 variable "aws_windows_os" {
-  description = "The AWS version of Windows OS that should be installed on all blueprism ec2 resources"
+  description = "The AWS version of Windows OS that should be installed on all Blue Prism ec2 resources"
   default     = "Windows_Server-2016-English-Full-Base-*"
 }
 
 variable "bp_username" {
-  description = "Username to login into blueprism application"
+  description = "Username to login into Blue Prism application"
   default     = "admin"
 }
 
 variable "bp_password" {
-  description = "Password to login into blueprism application"
+  description = "Password to login into Blue Prism application"
   default     = "admin"
 }
 
 variable "create_new_db" {
-  description = "Boolean flag to setup new database for blueprism app. It should be set to 'true' for the first time while trying to setup database"
+  description = "Boolean flag to setup new database for Blue Prism app. It should be set to 'true' for the first time while trying to setup database"
   default     = false }
 
 variable "db_name" {
-  description = "Name of the database that should be used to connect with blueprism appserver"
+  description = "Name of the database that should be used to connect with Blue Prism appserver"
 }
 
 variable "db_master_username" {
@@ -71,27 +71,27 @@ variable "db_storage_type" {
 }
 
 variable "db_engine" {
-  description = "RDS Database engine for setting up blueprism database"
+  description = "RDS Database engine for setting up Blue Prism database"
   default     = "sqlserver-ex"
 }
 
 variable "db_identifier" {
-  description = "The identifier that should be used for the blueprism database"
+  description = "The identifier that should be used for the Blue Prism database"
   default     = "blueprism-db"
 }
 
 variable "db_changes_apply_immediately" {
-  description = "Boolean flag to apply changes to the blueprism database immediately"
+  description = "Boolean flag to apply changes to the Blue Prism database immediately"
   default     = false
 }
 
 variable "db_instance_class" {
-  description = "RDS Database instance class to be used for blueprism database"
+  description = "RDS Database instance class to be used for Blue Prism database"
 
 }
 
 variable "db_subnet_group_name" {
-  description = "Provide a database subnet group name within which blueprism database should be launched"
+  description = "Provide a database subnet group name within which Blue Prism database should be launched"
 }
 
 variable "db_timezone" {
@@ -119,13 +119,13 @@ variable "db_maintenance_window" {
 }
 
 variable "db_sg_policy_name" {
-  description = "Database security group policy name for blueprism database"
+  description = "Database security group policy name for Blue Prism database"
   default     = "blueprism-db-sg-policy"
 }
 
 variable "db_sg_ingress_cidr" { 
   type        = "list"
-  description = "CIDR IP range from which blueprism database can be accessed directly"
+  description = "CIDR IP range from which Blue Prism database can be accessed directly"
   default     = []
 }
 
@@ -149,23 +149,23 @@ variable "appserver_windows_custom_user_password" {
 }
 
 variable "appserver_instance_type" {
-  description = "EC2 instance type for blueprism appserver"
+  description = "EC2 instance type for Blue Prism appserver"
   default     = "t2.small"
 }
 
 variable "appserver_disable_api_termination" {
-  description = "Boolean flag to disable api termination if set to true for blueprism appserver"
+  description = "Boolean flag to disable api termination if set to true for Blue Prism appserver"
   default     = false
 }
 
 variable "appserver_root_volume_size" {
-  description = "Root volume size for blueprism appserver in GB"
+  description = "Root volume size for Blue Prism appserver in GB"
   default     = 30 
 }
 
 variable "appserver_private_ip" { 
   type        = "list"
-  description = "List of Private IPs for the blueprism appserver. This module will automatically generate the count value based on the number of elements in the list"
+  description = "List of Private IPs for the Blue Prism appserver. This module will automatically generate the count value based on the number of elements in the list"
 }
 
 variable "appserver_key_name" {
@@ -174,13 +174,13 @@ variable "appserver_key_name" {
 }
 
 variable "appserver_port" {
-  description = "The port on which blueprism appserver should be configured to listen for client/resource pcs"
+  description = "The port on which Blue Prism appserver should be configured to listen for client/resource pcs"
   default     = "8199"
 }
 
 variable "appserver_sg_ingress_cidr" { 
   type        = "list"
-  description = "CIDR IP range from which blueprism appserver can be accessed directly"
+  description = "CIDR IP range from which Blue Prism appserver can be accessed directly"
   default     = [ "0.0.0.0/0" ]
 }
 
@@ -214,23 +214,23 @@ variable "client_windows_custom_user2_password" {
 }
 
 variable "client_instance_type" {
-  description = "EC2 instance type for blueprism client"
+  description = "EC2 instance type for Blue Prism client"
   default     = "t2.small"
 }
 
 variable "client_disable_api_termination" {
-  description = "Boolean flag to disable api termination if set to true for blueprism client"
+  description = "Boolean flag to disable api termination if set to true for Blue Prism client"
   default     = false
 }
 
 variable "client_root_volume_size" {
-  description = "Root volume size for blueprism client in GB"
+  description = "Root volume size for Blue Prism client in GB"
   default     = 30 
 }
 
 variable "client_private_ip" { 
   type        = "list"
-  description = "List of Private IPs for the blueprism client. This module will automatically generate the count value based on the number of elements in the list"
+  description = "List of Private IPs for the Blue Prism client. This module will automatically generate the count value based on the number of elements in the list"
 }
 
 variable "client_key_name" {
@@ -240,7 +240,7 @@ variable "client_key_name" {
 
 variable "client_sg_ingress_cidr" { 
   type        = "list"
-  description = "CIDR IP range from which blueprism client can be accessed directly"
+  description = "CIDR IP range from which Blue Prism client can be accessed directly"
   default     = [ "0.0.0.0/0" ]
 }
 
@@ -274,23 +274,23 @@ variable "resource_windows_custom_user2_password" {
 }
 
 variable "resource_instance_type" {
-  description = "EC2 instance type for blueprism resource"
+  description = "EC2 instance type for Blue Prism resource"
   default     = "t2.small"
 }
 
 variable "resource_disable_api_termination" {
-  description = "Boolean flag to disable api termination if set to true for blueprism resource"
+  description = "Boolean flag to disable api termination if set to true for Blue Prism resource"
   default     = false
 }
 
 variable "resource_root_volume_size" {
-  description = "Root volume size for blueprism resource in GB"
+  description = "Root volume size for Blue Prism resource in GB"
   default     = 30 
 }
 
 variable "resource_private_ip" { 
   type        = "list" 
-  description = "List of Private IPs for the blueprism resource. This module will automatically generate the count value based on the number of elements in the list"
+  description = "List of Private IPs for the Blue Prism resource. This module will automatically generate the count value based on the number of elements in the list"
 }
 
 variable "resource_key_name" {
@@ -300,6 +300,6 @@ variable "resource_key_name" {
 
 variable "resource_sg_ingress_cidr" { 
   type        = "list"
-  description = "CIDR IP range from which blueprism resource can be accessed directly"
+  description = "CIDR IP range from which Blue Prism resource can be accessed directly"
   default     = [ "0.0.0.0/0" ]
 }

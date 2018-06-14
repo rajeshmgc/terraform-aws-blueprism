@@ -1,6 +1,6 @@
-#----------------------------------
-# AWS EC2 AppServer for BluePrism #
-#----------------------------------
+#-----------------------------------
+# AWS EC2 AppServer for Blue Prism #
+#-----------------------------------
 data "aws_ami" "windows" {
     most_recent = true
     owners      = ["amazon"]
@@ -43,9 +43,9 @@ data "template_file" "blueprism_appserver_setup" {
   }
 }
 
-#-------------------------------------------
-# AWS EC2 Interactive Client for BluePrism #
-#-------------------------------------------
+#--------------------------------------------
+# AWS EC2 Interactive Client for Blue Prism #
+#--------------------------------------------
 data "template_file" "blueprism_client_setup" {
   count = "${length(var.client_private_ip)}"
   template = "${file("${path.module}/templates/client_setup.tpl")}"
@@ -67,9 +67,9 @@ data "template_file" "blueprism_client_setup" {
   }
 }
 
-#------------------------------------
-# AWS EC2 Resource PC for BluePrism #
-#------------------------------------
+#-------------------------------------
+# AWS EC2 Resource PC for Blue Prism #
+#-------------------------------------
 data "template_file" "blueprism_resource_setup" {
   count = "${length(var.resource_private_ip)}"
   template = "${file("${path.module}/templates/resource_setup.tpl")}"

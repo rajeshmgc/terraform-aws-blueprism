@@ -10,3 +10,4 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Everything! Initial release of the module.
+- Releasing for open source.

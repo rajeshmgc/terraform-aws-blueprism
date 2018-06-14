@@ -1,11 +1,11 @@
-# This terraform plan creates all resources required for BluePrism
+# This terraform plan creates all resources required for Blue Prism
 provider "aws" {
   region  = "${var.region}"
 }
 
-#---------------------------------
-# AWS RDS Database for BluePrism #
-#---------------------------------
+#----------------------------------
+# AWS RDS Database for Blue Prism #
+#----------------------------------
 resource "aws_db_instance" "blueprism_db" {
   username             = "${var.db_master_username}"
   password             = "${var.db_master_password}"
@@ -37,9 +37,9 @@ resource "aws_db_instance" "blueprism_db" {
   ]
 }
 
-#--------------------------------------------
-# AWS Security Group for BluePrism Database #
-#--------------------------------------------
+#---------------------------------------------
+# AWS Security Group for Blue Prism Database #
+#---------------------------------------------
 resource "aws_security_group" "blueprism_db_sg_policy" {
   name        = "${var.db_sg_policy_name}"
   description = "Allow all inbound traffic from internal VPC"
@@ -57,9 +57,9 @@ resource "aws_security_group" "blueprism_db_sg_policy" {
   tags = "${merge(var.tags, map("Name", "${var.db_sg_policy_name}"))}"
 }
 
-#----------------------------------
-# AWS EC2 AppServer for BluePrism #
-#----------------------------------
+#-----------------------------------
+# AWS EC2 AppServer for Blue Prism #
+#-----------------------------------
 resource "aws_instance" "blueprism_appserver" {
   count = "${length(var.appserver_private_ip)}"
   
@@ -97,12 +97,12 @@ resource "aws_instance" "blueprism_appserver" {
   ]
 }
 
-#---------------------------------------------
-# AWS Security Group for BluePrism Appserver #
-#---------------------------------------------
+#----------------------------------------------
+# AWS Security Group for Blue Prism Appserver #
+#----------------------------------------------
 resource "aws_security_group" "blueprism_appserver_sg" {
   name        = "blueprism-appserver-sg"
-  description = "This is the security group policy for BluePrism AppServer"
+  description = "This is the security group policy for Blue Prism AppServer"
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
@@ -122,9 +122,9 @@ resource "aws_security_group" "blueprism_appserver_sg" {
   tags = "${merge(var.tags, map("Name", "blueprism-appserver-sg"))}"
 }
 
-#-------------------------------------------
-# AWS EC2 Interactive Client for BluePrism #
-#-------------------------------------------
+#--------------------------------------------
+# AWS EC2 Interactive Client for Blue Prism #
+#--------------------------------------------
 resource "aws_instance" "blueprism_client" {
   count = "${length(var.client_private_ip)}"
 
@@ -161,12 +161,12 @@ resource "aws_instance" "blueprism_client" {
   ]
 }
 
-#------------------------------------------------------
-# AWS Security Group for BluePrism Interactive Client #
-#------------------------------------------------------
+#-------------------------------------------------------
+# AWS Security Group for Blue Prism Interactive Client #
+#-------------------------------------------------------
 resource "aws_security_group" "blueprism_client_sg" {
   name        = "blueprism-client-sg"
-  description = "This is the security group policy for BluePrism Interactive Client"
+  description = "This is the security group policy for Blue Prism Interactive Client"
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
@@ -186,9 +186,9 @@ resource "aws_security_group" "blueprism_client_sg" {
   tags = "${merge(var.tags, map("Name", "blueprism-client-sg"))}"
 }
 
-#------------------------------------
-# AWS EC2 Resource PC for BluePrism #
-#------------------------------------
+#-------------------------------------
+# AWS EC2 Resource PC for Blue Prism #
+#-------------------------------------
 resource "aws_instance" "blueprism_resource" {
   count = "${length(var.resource_private_ip)}"
 
@@ -225,12 +225,12 @@ resource "aws_instance" "blueprism_resource" {
   ]
 }
 
-#-----------------------------------------------
-# AWS Security Group for BluePrism Resource PC #
-#-----------------------------------------------
+#------------------------------------------------
+# AWS Security Group for Blue Prism Resource PC #
+#------------------------------------------------
 resource "aws_security_group" "blueprism_resource_sg" {
   name        = "blueprism-resource-sg"
-  description = "This is the security group policy for BluePrism Resource PC"
+  description = "This is the security group policy for Blue Prism Resource PC"
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
 
   ingress {
