@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v1.0.0] - 2018-06-15
+## [v1.1] - 2018-06-15
+
+### Added
+
+- Allow provisioning appserver, interactive client and resource pc with different aws amis if provided as a variable to the module, else will take the default value of Windows Server 2016 English.
+- Allow passing info for multiple username with passwords that should be created separately on appserver, client and resource pc while initializing them.
+- Allow users to pass list of custom powershell commands that they would like to run while creating a new blueprism appserver, client or resource machine.
+- New feature to install Blue Prism MAPI Ex to the resource pc if the installer path is specified.
+
+## [v1.0.0] - 2018-06-14
 
 ### Added
 

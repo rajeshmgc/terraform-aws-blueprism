@@ -152,6 +152,8 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| appserver_ami | The AWS AMI name that should be used to setup Blue Prism Appserver on | string | `` | no |
+| appserver_custom_powershell_commands | List of custom powershell commands you would like to run while creating a Blue Prism Appserver machine. These will only be executed once when a new instance is created | list | `<list>` | no |
 | appserver_disable_api_termination | Boolean flag to disable api termination if set to true for Blue Prism appserver | string | `false` | no |
 | appserver_hostname | Windows hostname that should be assigned to the appserver machine | string | `bp-appserv` | no |
 | appserver_instance_type | EC2 instance type for Blue Prism appserver | string | `t2.small` | no |
@@ -161,13 +163,15 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | appserver_root_volume_size | Root volume size for Blue Prism appserver in GB | string | `30` | no |
 | appserver_sg_ingress_cidr | CIDR IP range from which Blue Prism appserver can be accessed directly | list | `<list>` | no |
 | appserver_windows_administrator_password | Windows password for Administrator user on appserver machine | string | - | yes |
-| appserver_windows_custom_user_password | Windows password for Custom user on appserver machine | string | `` | no |
-| appserver_windows_custom_user_username | Windows username for Custom user on appserver machine | string | `` | no |
-| aws_windows_os | The AWS version of Windows OS that should be installed on all Blue Prism ec2 resources | string | `Windows_Server-2016-English-Full-Base-*` | no |
+| appserver_windows_custom_user_password | List of passwords for Windows login mapped to custom usernames for appserver | list | `<list>` | no |
+| appserver_windows_custom_user_username | List of custom usernames for Windows login that needs to be created on appserver | list | `<list>` | no |
+| aws_windows_ami | The AWS version of Windows OS that should be installed on all Blue Prism ec2 resources | string | `Windows_Server-2016-English-Full-Base-*` | no |
 | blueprism_installer_path | The complete url to download Blue Prism installer file from | string | - | yes |
 | blueprism_license_path | The complete url to download Blue Prism license file from | string | - | yes |
 | bp_password | Password to login into Blue Prism application | string | `admin` | no |
 | bp_username | Username to login into Blue Prism application | string | `admin` | no |
+| client_ami | The AWS AMI name that should be used to setup Blue Prism Interactive Client on | string | `` | no |
+| client_custom_powershell_commands | List of custom powershell commands you would like to run while creating a Blue Prism Interative Client machine. These will only be executed once when a new instance is created | list | `<list>` | no |
 | client_disable_api_termination | Boolean flag to disable api termination if set to true for Blue Prism client | string | `false` | no |
 | client_hostname | Windows hostname that should be assigned to the client machine | string | `bp-client` | no |
 | client_instance_type | EC2 instance type for Blue Prism client | string | `t2.small` | no |
@@ -176,10 +180,8 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | client_root_volume_size | Root volume size for Blue Prism client in GB | string | `30` | no |
 | client_sg_ingress_cidr | CIDR IP range from which Blue Prism client can be accessed directly | list | `<list>` | no |
 | client_windows_administrator_password | Windows password for Administrator user on client machine | string | - | yes |
-| client_windows_custom_user2_password | Windows password for Custom2 user on client machine | string | `` | no |
-| client_windows_custom_user2_username | Windows username for Custom2 user on client machine | string | `` | no |
-| client_windows_custom_user_password | Windows password for Custom user on client machine | string | `` | no |
-| client_windows_custom_user_username | Windows username for Custom user on client machine | string | `` | no |
+| client_windows_custom_user_password | List of passwords for Windows login mapped to custom usernames for client | list | `<list>` | no |
+| client_windows_custom_user_username | List of custom usernames for Windows login that needs to be created on client | list | `<list>` | no |
 | create_new_db | Boolean flag to setup new database for Blue Prism app. It should be set to 'true' for the first time while trying to setup database | string | `false` | no |
 | db_backup_retention_period | Database backup retention period for RDS | string | `0` | no |
 | db_backup_window | Database backup window for RDS in UTC | string | `04:00-06:00` | no |
@@ -199,8 +201,11 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | db_subnet_group_name | Provide a database subnet group name within which Blue Prism database should be launched | string | - | yes |
 | db_timezone | Custom timezone for Microsoft SQL RDS Database | string | `` | no |
 | dns_suffix_domain_name | Internal network domain name for your vpc if you have enabled dns_hostnames and dns_support | string | `` | no |
-| login_agent_installer_path | The complete url to download Blue Prism login agent installer file from | string | `` | no |
+| login_agent_installer_path | The complete url to download Blue Prism login agent installer file from and install on Resource PC | string | `` | no |
+| mapi_installer_path | The complete url to download Blue Prism MAPI Ex installer file from and install on Resource PC | string | `` | no |
 | region | The aws region in which you wish to create Blue Prism resources | string | `us-east-1` | no |
+| resource_ami | The AWS AMI name that should be used to setup Blue Prism Resource pc on | string | `` | no |
+| resource_custom_powershell_commands | List of custom powershell commands you would like to run while creating a Blue Prism Resource pc. These will only be executed once when a new instance is created | list | `<list>` | no |
 | resource_disable_api_termination | Boolean flag to disable api termination if set to true for Blue Prism resource | string | `false` | no |
 | resource_hostname | Windows hostname that should be assigned to the resource pc | string | `bp-resource` | no |
 | resource_instance_type | EC2 instance type for Blue Prism resource | string | `t2.small` | no |
@@ -209,10 +214,8 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | resource_root_volume_size | Root volume size for Blue Prism resource in GB | string | `30` | no |
 | resource_sg_ingress_cidr | CIDR IP range from which Blue Prism resource can be accessed directly | list | `<list>` | no |
 | resource_windows_administrator_password | Windows password for Administrator user on resource pc | string | - | yes |
-| resource_windows_custom_user2_password | Windows password for Custom2 user on resource pc | string | `` | no |
-| resource_windows_custom_user2_username | Windows username for Custom2 user on resource pc | string | `` | no |
-| resource_windows_custom_user_password | Windows password for Custom user on resource pc | string | `` | no |
-| resource_windows_custom_user_username | Windows username for Custom user on resource pc | string | `` | no |
+| resource_windows_custom_user_password | List of passwords for Windows login mapped to custom usernames for resource pc | list | `<list>` | no |
+| resource_windows_custom_user_username | List of custom usernames for Windows login that needs to be created on resource pc | list | `<list>` | no |
 | subnet_id | The aws subnet id of the subnet in which you want to create all Blue Prism ec2 resources | string | - | yes |
 | tags | A map of tags to add to all Blue Prism resources | string | `<map>` | no |
 
