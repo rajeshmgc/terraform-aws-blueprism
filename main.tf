@@ -63,7 +63,7 @@ resource "aws_security_group" "blueprism_db_sg_policy" {
 resource "aws_instance" "blueprism_appserver" {
   count = "${length(var.appserver_private_ip)}"
   
-  ami           = "${data.aws_ami.windows.id}"
+  ami           = "${data.aws_ami.appserver_ami.id}"
   instance_type = "${var.appserver_instance_type}"
   
   key_name                = "${var.appserver_key_name}"
@@ -128,7 +128,7 @@ resource "aws_security_group" "blueprism_appserver_sg" {
 resource "aws_instance" "blueprism_client" {
   count = "${length(var.client_private_ip)}"
 
-  ami           = "${data.aws_ami.windows.id}"
+  ami           = "${data.aws_ami.client_ami.id}"
   instance_type = "${var.client_instance_type}"
   
   key_name                = "${var.client_key_name}"
@@ -192,7 +192,7 @@ resource "aws_security_group" "blueprism_client_sg" {
 resource "aws_instance" "blueprism_resource" {
   count = "${length(var.resource_private_ip)}"
 
-  ami           = "${data.aws_ami.windows.id}"
+  ami           = "${data.aws_ami.resource_ami.id}"
   instance_type = "${var.resource_instance_type}"
   
   key_name                = "${var.resource_key_name}"

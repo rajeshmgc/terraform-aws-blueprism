@@ -1,13 +1,13 @@
 #-----------------------------------
 # AWS EC2 AppServer for Blue Prism #
 #-----------------------------------
-data "aws_ami" "windows" {
+data "aws_ami" "appserver_ami" {
     most_recent = true
     owners      = ["amazon"]
 
     filter {
       name   = "name"
-      values = [ "${var.aws_windows_os}" ]
+      values = [ "${length(var.appserver_ami) > 0 ? var.appserver_ami : var.aws_windows_ami}" ]
     }
 }
 
@@ -58,6 +58,16 @@ data "template_file" "blueprism_appserver_setup" {
 #--------------------------------------------
 # AWS EC2 Interactive Client for Blue Prism #
 #--------------------------------------------
+data "aws_ami" "client_ami" {
+    most_recent = true
+    owners      = ["amazon"]
+
+    filter {
+      name   = "name"
+      values = [ "${length(var.client_ami) > 0 ? var.client_ami : var.aws_windows_ami}" ]
+    }
+}
+
 data "template_file" "client_create_custom_users" {
   count = "${length(var.client_windows_custom_user_username)}"
   template = "$Password = ConvertTo-SecureString $${custom_password} –AsPlainText –Force; New-LocalUser $${custom_username} -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName $${custom_username} -Description $${custom_username}; Add-LocalGroupMember -Group Administrators -Member $${custom_username}"
@@ -92,6 +102,16 @@ data "template_file" "blueprism_client_setup" {
 #-------------------------------------
 # AWS EC2 Resource PC for Blue Prism #
 #-------------------------------------
+data "aws_ami" "resource_ami" {
+    most_recent = true
+    owners      = ["amazon"]
+
+    filter {
+      name   = "name"
+      values = [ "${length(var.resource_ami) > 0 ? var.resource_ami : var.aws_windows_ami}" ]
+    }
+}
+
 data "template_file" "resource_create_custom_users" {
   count = "${length(var.resource_windows_custom_user_username)}"
   template = "$Password = ConvertTo-SecureString $${custom_password} –AsPlainText –Force; New-LocalUser $${custom_username} -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName $${custom_username} -Description $${custom_username}; Add-LocalGroupMember -Group Administrators -Member $${custom_username}"

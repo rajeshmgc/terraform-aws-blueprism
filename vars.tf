@@ -35,7 +35,7 @@ variable "dns_suffix_domain_name" {
   default     = ""
 }
 
-variable "aws_windows_os" {
+variable "aws_windows_ami" {
   description = "The AWS version of Windows OS that should be installed on all Blue Prism ec2 resources"
   default     = "Windows_Server-2016-English-Full-Base-*"
 }
@@ -134,6 +134,11 @@ variable "db_sg_ingress_cidr" {
   default     = []
 }
 
+variable "appserver_ami" {
+  description = "The AWS AMI name that should be used to setup Blue Prism Appserver on"
+  default     = ""
+}
+
 variable "appserver_hostname" {
   description = "Windows hostname that should be assigned to the appserver machine"
   default     = "bp-appserv"
@@ -197,6 +202,10 @@ variable "appserver_custom_powershell_commands" {
   default     = []
 }
 
+variable "client_ami" {
+  description = "The AWS AMI name that should be used to setup Blue Prism Interactive Client on"
+  default     = ""
+}
 
 variable "client_hostname" {
   description = "Windows hostname that should be assigned to the client machine"
@@ -254,6 +263,11 @@ variable "client_custom_powershell_commands" {
   type        = "list"
   description = "List of custom powershell commands you would like to run while creating a Blue Prism Interative Client machine. These will only be executed once when a new instance is created"
   default     = []
+}
+
+variable "resource_ami" {
+  description = "The AWS AMI name that should be used to setup Blue Prism Resource pc on"
+  default     = ""
 }
 
 variable "resource_hostname" {
