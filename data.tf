@@ -15,6 +15,16 @@ data "aws_subnet" "selected" {
   id = "${var.subnet_id}"
 }
 
+data "template_file" "appserver_create_custom_users" {
+  count = "${length(var.appserver_windows_custom_user_username)}"
+  template = "$Password = ConvertTo-SecureString $${custom_password} –AsPlainText –Force; New-LocalUser $${custom_username} -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName $${custom_username} -Description $${custom_username}; Add-LocalGroupMember -Group Administrators -Member $${custom_username}"
+
+  vars {
+    custom_username = "${element(var.appserver_windows_custom_user_username, count.index)}"
+    custom_password = "${element(var.appserver_windows_custom_user_password, count.index)}"
+  }
+}
+
 data "template_file" "blueprism_appserver_setup" {
   count = "${length(var.appserver_private_ip)}"
   template = "${file("${path.module}/templates/appserver_setup.tpl")}"
@@ -24,8 +34,8 @@ data "template_file" "blueprism_appserver_setup" {
     dns_suffix_domain_name = "${var.dns_suffix_domain_name}" 
 
     administrator_password = "${var.appserver_windows_administrator_password}"
-    custom_user_username   = "${var.appserver_windows_custom_user_username}"
-    custom_user_password   = "${var.appserver_windows_custom_user_password}"
+    
+    create_custom_users = "${ length(var.appserver_windows_custom_user_username) > 0 && length(var.appserver_windows_custom_user_password) > 0 ? join("; ", data.template_file.appserver_create_custom_users.*.rendered) : "" }" 
     
     blueprism_installer_path = "${var.blueprism_installer_path}"
     blueprism_license_path   = "${var.blueprism_license_path}"
@@ -48,6 +58,16 @@ data "template_file" "blueprism_appserver_setup" {
 #--------------------------------------------
 # AWS EC2 Interactive Client for Blue Prism #
 #--------------------------------------------
+data "template_file" "client_create_custom_users" {
+  count = "${length(var.client_windows_custom_user_username)}"
+  template = "$Password = ConvertTo-SecureString $${custom_password} –AsPlainText –Force; New-LocalUser $${custom_username} -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName $${custom_username} -Description $${custom_username}; Add-LocalGroupMember -Group Administrators -Member $${custom_username}"
+
+  vars {
+    custom_username = "${element(var.client_windows_custom_user_username, count.index)}"
+    custom_password = "${element(var.client_windows_custom_user_password, count.index)}"
+  }
+}
+
 data "template_file" "blueprism_client_setup" {
   count = "${length(var.client_private_ip)}"
   template = "${file("${path.module}/templates/client_setup.tpl")}"
@@ -57,10 +77,8 @@ data "template_file" "blueprism_client_setup" {
     dns_suffix_domain_name = "${var.dns_suffix_domain_name}" 
 
     administrator_password = "${var.client_windows_administrator_password}"
-    custom_user_username   = "${var.client_windows_custom_user_username}"
-    custom_user_password   = "${var.client_windows_custom_user_password}"
-    custom_user2_username  = "${var.client_windows_custom_user2_username}"
-    custom_user2_password  = "${var.client_windows_custom_user2_password}"
+    
+    create_custom_users = "${ length(var.client_windows_custom_user_username) > 0 && length(var.client_windows_custom_user_password) > 0 ? join("; ", data.template_file.client_create_custom_users.*.rendered) : "" }" 
     
     blueprism_installer_path = "${var.blueprism_installer_path}"
 
@@ -74,6 +92,16 @@ data "template_file" "blueprism_client_setup" {
 #-------------------------------------
 # AWS EC2 Resource PC for Blue Prism #
 #-------------------------------------
+data "template_file" "resource_create_custom_users" {
+  count = "${length(var.resource_windows_custom_user_username)}"
+  template = "$Password = ConvertTo-SecureString $${custom_password} –AsPlainText –Force; New-LocalUser $${custom_username} -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName $${custom_username} -Description $${custom_username}; Add-LocalGroupMember -Group Administrators -Member $${custom_username}"
+
+  vars {
+    custom_username = "${element(var.resource_windows_custom_user_username, count.index)}"
+    custom_password = "${element(var.resource_windows_custom_user_password, count.index)}"
+  }
+}
+
 data "template_file" "blueprism_resource_setup" {
   count = "${length(var.resource_private_ip)}"
   template = "${file("${path.module}/templates/resource_setup.tpl")}"
@@ -83,14 +111,14 @@ data "template_file" "blueprism_resource_setup" {
     dns_suffix_domain_name = "${var.dns_suffix_domain_name}" 
 
     administrator_password = "${var.resource_windows_administrator_password}"
-    custom_user_username   = "${var.resource_windows_custom_user_username}"
-    custom_user_password   = "${var.resource_windows_custom_user_password}"
+
+    create_custom_users = "${ length(var.resource_windows_custom_user_username) > 0 && length(var.resource_windows_custom_user_password) > 0 ? join("; ", data.template_file.resource_create_custom_users.*.rendered) : "" }" 
     
     blueprism_installer_path   = "${var.blueprism_installer_path}"
     
-    install_login_agent = "${var.login_agent_installer_path ? "iwr -Uri "${var.login_agent_installer_path}" -OutFile login_agent.msi ; msiexec.exe /i login_agent.msi /qb- ALLUSERS=1 " : "" }"
+    install_login_agent = "${ length(var.login_agent_installer_path) > 0 ? "iwr -Uri ${var.login_agent_installer_path} -OutFile login_agent.msi ; msiexec.exe /i login_agent.msi /qb- ALLUSERS=1 " : "" }"
     
-    install_mapi        = "${var.mapi_installer_path ? "iwr -Uri "${var.mapi_installer_path}" -OutFile mapiex.msi; msiexec.exe /i mapiex.msi /qb- ALLUSERS=1" : "" }"
+    install_mapi        = "${ length(var.mapi_installer_path) > 0 ? "iwr -Uri ${var.mapi_installer_path} -OutFile mapiex.msi; msiexec.exe /i mapiex.msi /qb- ALLUSERS=1" : "" }"
 
     appserver_hostname = "${element(var.appserver_private_ip, 0)}"
     appserver_port     = "${var.appserver_port}"

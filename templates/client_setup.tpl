@@ -14,19 +14,8 @@
   $Admin = [adsi]("WinNT://./administrator, user")
   $Admin.psbase.invoke("SetPassword", "${administrator_password}")
 
-  # Create new custom user
-  $Password = ConvertTo-SecureString "${custom_user_password}" –AsPlainText –Force
-  New-LocalUser "${custom_user_username}" -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName "${custom_user_username}" -Description "${custom_user_username}"
-
-  # Give Administrator rights to new custom user
-  Add-LocalGroupMember -Group "Administrators" -Member "${custom_user_username}"
-
-  # Create new custom user2
-  $Password = ConvertTo-SecureString "${custom_user2_password}" –AsPlainText –Force
-  New-LocalUser "${custom_user2_username}" -Password $Password -PasswordNeverExpires -AccountNeverExpires -FullName "${custom_user2_username}" -Description "${custom_user2_username}"
-
-  # Give Administrator rights to new custom user
-  Add-LocalGroupMember -Group "Administrators" -Member "${custom_user2_username}"
+  # Create new custom users
+  ${create_custom_users}
 
   # Add Blue Prism dir to the path variable permanently 
   #---------------------------------------------------- 

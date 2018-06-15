@@ -144,13 +144,15 @@ variable "appserver_windows_administrator_password" {
 }
 
 variable "appserver_windows_custom_user_username" {
-  description = "Windows username for Custom user on appserver machine"
-  default     = ""
+  type        = "list"
+  description = "List of custom usernames for Windows login that needs to be created on appserver"
+  default     = []
 }
 
 variable "appserver_windows_custom_user_password" {
-  description = "Windows password for Custom user on appserver machine"
-  default     = ""
+  type        = "list"
+  description = "List of passwords for Windows login mapped to custom usernames for appserver"
+  default     = []
 }
 
 variable "appserver_instance_type" {
@@ -206,23 +208,15 @@ variable "client_windows_administrator_password" {
 }
 
 variable "client_windows_custom_user_username" {
-  description = "Windows username for Custom user on client machine"
-  default     = ""
+  type        = "list"
+  description = "List of custom usernames for Windows login that needs to be created on client"
+  default     = []
 }
 
 variable "client_windows_custom_user_password" {
-  description = "Windows password for Custom user on client machine"
-  default     = ""
-}
-
-variable "client_windows_custom_user2_username" {
-  description = "Windows username for Custom2 user on client machine"
-  default     = ""
-}
-
-variable "client_windows_custom_user2_password" {
-  description = "Windows password for Custom2 user on client machine"
-  default     = ""
+  type        = "list"
+  description = "List of passwords for Windows login mapped to custom usernames for client"
+  default     = []
 }
 
 variable "client_instance_type" {
@@ -272,23 +266,15 @@ variable "resource_windows_administrator_password" {
 }
 
 variable "resource_windows_custom_user_username" {
-  description = "Windows username for Custom user on resource pc"
-  default     = ""
+  type        = "list"
+  description = "List of custom usernames for Windows login that needs to be created on resource pc"
+  default     = []
 }
 
 variable "resource_windows_custom_user_password" {
-  description = "Windows password for Custom user on resource pc"
-  default     = ""
-}
-
-variable "resource_windows_custom_user2_username" {
-  description = "Windows username for Custom2 user on resource pc"
-  default     = ""
-}
-
-variable "resource_windows_custom_user2_password" {
-  description = "Windows password for Custom2 user on resource pc"
-  default     = ""
+  type        = "list"
+  description = "List of passwords for Windows login mapped to custom usernames for resource pc"
+  default     = []
 }
 
 variable "resource_instance_type" {
