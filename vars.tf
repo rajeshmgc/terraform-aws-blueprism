@@ -1,8 +1,3 @@
-variable "region" {
-  description = "The aws region in which you wish to create Blue Prism resources"
-  default     = "us-east-1"
-}
-
 variable "subnet_id" {
   description = "The aws subnet id of the subnet in which you want to create all Blue Prism ec2 resources"
 }

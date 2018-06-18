@@ -1,8 +1,4 @@
 # This terraform plan creates all resources required for Blue Prism
-provider "aws" {
-  region  = "${var.region}"
-}
-
 #----------------------------------
 # AWS RDS Database for Blue Prism #
 #----------------------------------
