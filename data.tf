@@ -3,7 +3,7 @@
 #-----------------------------------
 data "aws_ami" "appserver_ami" {
     most_recent = true
-    owners      = ["amazon"]
+    owners      = ["amazon", "self"]
 
     filter {
       name   = "name"
@@ -60,7 +60,7 @@ data "template_file" "blueprism_appserver_setup" {
 #--------------------------------------------
 data "aws_ami" "client_ami" {
     most_recent = true
-    owners      = ["amazon"]
+    owners      = ["amazon", "self"]
 
     filter {
       name   = "name"
@@ -104,7 +104,7 @@ data "template_file" "blueprism_client_setup" {
 #-------------------------------------
 data "aws_ami" "resource_ami" {
     most_recent = true
-    owners      = ["amazon"]
+    owners      = ["amazon", "self"]
 
     filter {
       name   = "name"
