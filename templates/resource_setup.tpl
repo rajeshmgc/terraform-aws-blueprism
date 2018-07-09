@@ -20,7 +20,7 @@
   # Add Blue Prism dir to the path variable permanently 
   #---------------------------------------------------- 
   $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path 
-  $newpath = "$oldpath;C:\Program Files\1Blue Prism Limited\Blue Prism Automate" 
+  $newpath = "$oldpath;C:\Program Files\Blue Prism Limited\Blue Prism Automate" 
   Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath 
   $env:Path += ";C:\Program Files\Blue Prism Limited\Blue Prism Automate" 
   
