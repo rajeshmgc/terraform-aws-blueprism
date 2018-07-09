@@ -53,6 +53,12 @@
   Set-Content -Path "C:\Users\Administrator\Desktop\resource.bat" -Value "automate.exe /resourcepc /public" -Force
   $WshShell = New-Object -comObject WScript.Shell
 
+  # Start resource listener automatically on logging in
+  $Shortcut = $WshShell.CreateShortcut("C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\resource.lnk")
+  $Shortcut.TargetPath = "C:\Users\Administrator\Desktop\resource.bat"
+  $Shortcut.Save()
+
+
   # Install Telnet for debugging just in case
   #------------------------------------------
   #dism /online /Enable-Feature /FeatureName:TelnetClient
