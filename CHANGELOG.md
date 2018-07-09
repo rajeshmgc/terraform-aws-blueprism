@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.1.3] - 2018-07-09
+
+### Fixed
+
+- Fixed typo in resource_setup template for adding blueprism path to env path variable. 
+
+## [v1.1.2] - 2018-06-21
+
+### Added
+
+- Added self to the data filter for owner along with amazon being the owner to allow users to use custom image they may have created. 
+
+## [v1.1.1] - 2018-06-18
+
+### Removed
+
+- Removed the provider block from the module to avoid conflicts and allow users to use this module with provider profiles in order to specify different regions. 
+
 ## [v1.1] - 2018-06-15
 
 ### Added
