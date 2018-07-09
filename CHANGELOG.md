@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v1.1.3] - 2018-07-09
 
+### Added
+
+- Updated resource template to automatically start resource listener when someone logs into administrator user on resource pc.
+
 ### Fixed
 
 - Fixed typo in resource_setup template for adding blueprism path to env path variable. 
