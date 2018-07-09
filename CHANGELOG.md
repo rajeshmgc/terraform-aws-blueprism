@@ -13,7 +13,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fixed typo in resource_setup template for adding blueprism path to env path variable. 
+- Fixed typo in client_setup and resource_setup template for adding correct blueprism path to env path variable. 
 
 ## [v1.1.2] - 2018-06-21
 
