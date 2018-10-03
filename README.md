@@ -189,6 +189,7 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | db_engine | RDS Database engine for setting up Blue Prism database | string | `sqlserver-ex` | no |
 | db_identifier | The identifier that should be used for the Blue Prism database | string | `blueprism-db` | no |
 | db_instance_class | RDS Database instance class to be used for Blue Prism database | string | - | yes |
+| db_kms_key_id | If db_storage_encrypted is true, the KMS key identifier for the encrypted DB instance | string | `` | no |
 | db_maintenance_window | Database maintenance window for RDS in UTC | string | `Tue:06:30-Tue:07:00` | no |
 | db_master_password | Database password in order for appserver to access the database | string | - | yes |
 | db_master_username | Database username in order for appserver to access the database | string | - | yes |
@@ -197,13 +198,13 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | db_sg_policy_name | Database security group policy name for Blue Prism database | string | `blueprism-db-sg-policy` | no |
 | db_snapshot_identifier | Custom snapshot identifier if you want to restore database from that particular snapshot | string | `` | no |
 | db_storage | The size of database server that should be allocated in GB | string | - | yes |
+| db_storage_encrypted | Specifies whether the DB instance is encrypted | string | `false` | no |
 | db_storage_type | RDS Database storage type | string | `gp2` | no |
 | db_subnet_group_name | Provide a database subnet group name within which Blue Prism database should be launched | string | - | yes |
 | db_timezone | Custom timezone for Microsoft SQL RDS Database | string | `` | no |
 | dns_suffix_domain_name | Internal network domain name for your vpc if you have enabled dns_hostnames and dns_support | string | `` | no |
 | login_agent_installer_path | The complete url to download Blue Prism login agent installer file from and install on Resource PC | string | `` | no |
 | mapi_installer_path | The complete url to download Blue Prism MAPI Ex installer file from and install on Resource PC | string | `` | no |
-| region | The aws region in which you wish to create Blue Prism resources | string | `us-east-1` | no |
 | resource_ami | The AWS AMI name that should be used to setup Blue Prism Resource pc on | string | `` | no |
 | resource_custom_powershell_commands | List of custom powershell commands you would like to run while creating a Blue Prism Resource pc. These will only be executed once when a new instance is created | list | `<list>` | no |
 | resource_disable_api_termination | Boolean flag to disable api termination if set to true for Blue Prism resource | string | `false` | no |

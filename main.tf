@@ -44,8 +44,8 @@ resource "aws_db_instance" "blueprism_db" {
   # This block should be used when changing size of the db instance server from t series to m series for scaling issues. Since on changing size it will destroy current db instance and save it's snapshot with the name given in final_snapshot_identifier. We can use it's id and pass it below to allow new instance be created from it's backup for smoother transition.
   snapshot_identifier = "${var.db_snapshot_identifier}"
   
-  storage_encrypted = "${var.db_storage_encrypted}"
-  kms_key_id        = "${length(var.db_storage_encrypted) > 0 ? var.db_kms_key_id : ""}"
+  storage_encrypted = "${ var.db_storage_encrypted == "true" ? true : "" }"
+  kms_key_id        = "${ var.db_storage_encrypted == "true" ? var.db_kms_key_id : ""}"
   
   vpc_security_group_ids = ["${aws_security_group.blueprism_db_sg_policy.id}"]
 

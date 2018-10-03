@@ -107,7 +107,7 @@ variable "db_snapshot_identifier" {
 
 variable "db_storage_encrypted" {
   description = "Specifies whether the DB instance is encrypted"
-  default     = ""
+  default     = "false"
 }
 
 variable "db_kms_key_id" {

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.1.4] - 2018-10-03
+
+### Added
+
+- Added feature to allow users specify if storage_encryption should be enabled for the blueprism db and if so the kms_key_id to be associated with it.
+- Added feature to allow users to specify a snapshot_identifier to allow restoring db from a snapshot.
+
 ## [v1.1.3] - 2018-07-09
 
 ### Added
