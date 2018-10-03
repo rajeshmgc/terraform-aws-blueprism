@@ -3,6 +3,8 @@
 # AWS Security Group for Blue Prism Database #
 #---------------------------------------------
 resource "aws_security_group" "blueprism_db_sg_policy" {
+  count = "${ length(var.custom_db_sg_id) > 0 ? 0 : 1 }"
+
   name        = "${var.db_sg_policy_name}"
   description = "Allow all inbound traffic from internal VPC"
   vpc_id      = "${data.aws_subnet.selected.vpc_id}"
@@ -47,13 +49,9 @@ resource "aws_db_instance" "blueprism_db" {
   storage_encrypted = "${ var.db_storage_encrypted == "true" ? "true" : "" }"
   kms_key_id        = "${ var.db_storage_encrypted == "true" ? var.db_kms_key_id : ""}"
   
-  vpc_security_group_ids = ["${aws_security_group.blueprism_db_sg_policy.id}"]
+  vpc_security_group_ids = ["${ length(var.custom_db_sg_id) > 0 ? var.custom_db_sg_id : aws_security_group.blueprism_db_sg_policy.id }"]
 
   tags = "${merge(var.tags, map("Name", "blueprism-db"))}"
-
-  depends_on = [ 
-    "aws_security_group.blueprism_db_sg_policy"
-  ]
 }
 
 #-----------------------------------

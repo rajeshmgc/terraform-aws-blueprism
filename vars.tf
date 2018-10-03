@@ -134,6 +134,11 @@ variable "db_sg_policy_name" {
   default     = "blueprism-db-sg-policy"
 }
 
+variable "custom_db_sg_id" {
+  description = "Security group's id that you want to associate to the Blue Prism RDS database. If none is specified it will create a new security group based on the value of attribute db_sg_policy_name"
+  default     = ""
+}
+
 variable "db_sg_ingress_cidr" { 
   type        = "list"
   description = "CIDR IP range from which Blue Prism database can be accessed directly"
