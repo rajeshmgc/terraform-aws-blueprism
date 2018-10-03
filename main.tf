@@ -1,4 +1,24 @@
 # This terraform plan creates all resources required for Blue Prism
+#---------------------------------------------
+# AWS Security Group for Blue Prism Database #
+#---------------------------------------------
+resource "aws_security_group" "blueprism_db_sg_policy" {
+  name        = "${var.db_sg_policy_name}"
+  description = "Allow all inbound traffic from internal VPC"
+  vpc_id      = "${data.aws_subnet.selected.vpc_id}"
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 1433
+    to_port     = 1433
+    cidr_blocks = [ 
+      "${ length(var.db_sg_ingress_cidr) > 0 ? join( ",", var.db_sg_ingress_cidr) : data.aws_subnet.selected.cidr_block }"
+    ]
+  }
+  
+  tags = "${merge(var.tags, map("Name", "${var.db_sg_policy_name}"))}"
+}
+
 #----------------------------------
 # AWS RDS Database for Blue Prism #
 #----------------------------------
@@ -22,7 +42,10 @@ resource "aws_db_instance" "blueprism_db" {
   maintenance_window         = "${var.db_maintenance_window}"
 
   # This block should be used when changing size of the db instance server from t series to m series for scaling issues. Since on changing size it will destroy current db instance and save it's snapshot with the name given in final_snapshot_identifier. We can use it's id and pass it below to allow new instance be created from it's backup for smoother transition.
-  # snapshot_identifier = "${var.db_snapshot_identifier}"
+  snapshot_identifier = "${var.db_snapshot_identifier}"
+  
+  storage_encrypted = "${var.db_storage_encrypted}"
+  kms_key_id        = "${length(var.db_storage_encrypted) > 0 ? var.db_kms_key_id : ""}"
   
   vpc_security_group_ids = ["${aws_security_group.blueprism_db_sg_policy.id}"]
 
@@ -31,26 +54,6 @@ resource "aws_db_instance" "blueprism_db" {
   depends_on = [ 
     "aws_security_group.blueprism_db_sg_policy"
   ]
-}
-
-#---------------------------------------------
-# AWS Security Group for Blue Prism Database #
-#---------------------------------------------
-resource "aws_security_group" "blueprism_db_sg_policy" {
-  name        = "${var.db_sg_policy_name}"
-  description = "Allow all inbound traffic from internal VPC"
-  vpc_id      = "${data.aws_subnet.selected.vpc_id}"
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = 1433
-    to_port     = 1433
-    cidr_blocks = [ 
-      "${ length(var.db_sg_ingress_cidr) > 0 ? join( ",", var.db_sg_ingress_cidr) : data.aws_subnet.selected.cidr_block }"
-    ]
-  }
-  
-  tags = "${merge(var.tags, map("Name", "${var.db_sg_policy_name}"))}"
 }
 
 #-----------------------------------

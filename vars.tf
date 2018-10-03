@@ -104,6 +104,17 @@ variable "db_snapshot_identifier" {
   description = "Custom snapshot identifier if you want to restore database from that particular snapshot"
   default     = ""
 }
+
+variable "db_storage_encrypted" {
+  description = "Specifies whether the DB instance is encrypted"
+  default     = ""
+}
+
+variable "db_kms_key_id" {
+  description = "If db_storage_encrypted is true, the KMS key identifier for the encrypted DB instance"
+  default     = ""
+}
+
 variable "db_backup_retention_period" {
   description = "Database backup retention period for RDS"
   default     = 0 }
