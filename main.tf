@@ -12,7 +12,7 @@ resource "aws_security_group" "blueprism_db_sg_policy" {
     from_port   = 1433
     to_port     = 1433
     cidr_blocks = [ 
-      "${ length(var.db_sg_ingress_cidr) > 0 ? join( ",", var.db_sg_ingress_cidr) : data.aws_subnet.selected.cidr_block }"
+      "${ split(",", length(var.db_sg_ingress_cidr) > 0 ? join( ",", var.db_sg_ingress_cidr) : data.aws_subnet.selected.cidr_block) }"
     ]
   }
   
