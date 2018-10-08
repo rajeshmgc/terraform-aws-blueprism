@@ -148,6 +148,14 @@ Many thanks to [the contributors listed here](https://github.com/CapsuleHealth/t
 
 MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-blueprism/tree/master/LICENSE) for full details.
 
+## Dependencies
+- Requires minimum terraform aws provider v 1.39.0
+```
+provider "aws" {
+  version = "~> 1.39.0"
+}
+```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -202,6 +210,7 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | db_storage_type | RDS Database storage type | string | `gp2` | no |
 | db_subnet_group_name | Provide a database subnet group name within which Blue Prism database should be launched | string | - | yes |
 | db_timezone | Custom timezone for Microsoft SQL RDS Database | string | `` | no |
+| deletion_protection | Allows user to enable accidental Deletion Protection for Blueprism RDS Database | string | `false` | no |
 | dns_suffix_domain_name | Internal network domain name for your vpc if you have enabled dns_hostnames and dns_support | string | `` | no |
 | login_agent_installer_path | The complete url to download Blue Prism login agent installer file from and install on Resource PC | string | `` | no |
 | mapi_installer_path | The complete url to download Blue Prism MAPI Ex installer file from and install on Resource PC | string | `` | no |
@@ -219,6 +228,7 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | resource_windows_custom_user_username | List of custom usernames for Windows login that needs to be created on resource pc | list | `<list>` | no |
 | subnet_id | The aws subnet id of the subnet in which you want to create all Blue Prism ec2 resources | string | - | yes |
 | tags | A map of tags to add to all Blue Prism resources | string | `<map>` | no |
+
 
 ## Outputs
 
@@ -239,3 +249,4 @@ MIT Licensed. See [LICENSE](https://github.com/CapsuleHealth/terraform-aws-bluep
 | resource_hostname | Windows hostname for Blue Prism resource pcs. There will be a hyphen number suffixed to it to identify the individual machine |
 | resource_instance_id | The list of instance ids for all Blue Prism resource pcs created |
 | resource_private_ip | The list of private ips for all Blue Prism resource pcs created |
+

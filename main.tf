@@ -46,6 +46,8 @@ resource "aws_db_instance" "blueprism_db" {
   
   storage_encrypted = "${ var.db_storage_encrypted == "true" ? "true" : "" }"
   kms_key_id        = "${ var.db_storage_encrypted == "true" ? var.db_kms_key_id : ""}"
+
+  deletion_protection = "${var.db_deletion_protection}"
   
   vpc_security_group_ids = ["${aws_security_group.blueprism_db_sg_policy.id}"]
 

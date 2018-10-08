@@ -115,6 +115,11 @@ variable "db_kms_key_id" {
   default     = ""
 }
 
+variable "db_deletion_protection" {
+  description = "Allows user to enable accidental Deletion Protection for Blueprism RDS Database"
+  default     = "false"
+}
+
 variable "db_backup_retention_period" {
   description = "Database backup retention period for RDS"
   default     = 0 }
