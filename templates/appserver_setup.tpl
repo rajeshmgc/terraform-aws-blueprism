@@ -18,6 +18,9 @@
   $Admin = [adsi]("WinNT://./administrator, user")
   $Admin.psbase.invoke("SetPassword", "${administrator_password}")
 
+  # Disable windows default password expiry for administrator user
+  Set-LocalUser -Name "administrator" -PasswordNeverExpires 1
+
   # Create new custom users
   ${create_custom_users}
 
